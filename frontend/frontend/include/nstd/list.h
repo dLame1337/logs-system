@@ -26,11 +26,11 @@ namespace nstd {
         list();
         ~list();
 
-        list(const list& other); // конструктор копіювання
-        list& operator=(const list& other); // присвоєннє копіюванням
+        list(const list& other); 
+        list& operator=(const list& other); 
 
-        list(list&& other) noexcept; // конструктор переміщення
-        list& operator=(list&& other) noexcept; // присвоєннє переміщенням
+        list(list&& other) noexcept;
+        list& operator=(list&& other) noexcept;
 
         bool insert(const K& key, const V& value);
         bool upsert(const K& key, const V& value);
@@ -69,10 +69,6 @@ namespace nstd {
 
     };
 }
-
-#pragma once
-#include <iostream>
-#include "nstd/list.h"
 
 namespace nstd {
     template<class K, class V>
@@ -155,12 +151,12 @@ namespace nstd {
     inline bool list<K, V>::insert(const K& key, const V& value)
     {
         Node<K, V>* tmp = find(key);
-        if (tmp) { // якщо вже є такий елемент ->
-            return false; // ігноруємо вставку
+        if (tmp) { 
+            return false; 
         }
         else {
-            add_to_list(key, value); // добавляємо елемент
-            return true; // true якщо добавився новий елемент
+            add_to_list(key, value); 
+            return true; 
         }
     }
 
@@ -168,13 +164,13 @@ namespace nstd {
     bool list<K, V>::upsert(const K& key, const V& value)
     {
         Node<K, V>* tmp = find(key);
-        if (tmp) { // якщо вже є такий елемент ->
-            tmp->pair_.value_ = value; // заміняємо значення
+        if (tmp) { 
+            tmp->pair_.value_ = value;
             return false;
         }
         else {
-            add_to_list(key, value); // добавляємо елемент
-            return true; // true якщо був добавлений елемент
+            add_to_list(key, value); 
+            return true;
         }
     }
 
@@ -199,7 +195,7 @@ namespace nstd {
                 prev_node->next_ = target_node->next_;
                 size_--;
                 delete target_node;
-                return true; // якщо щось було видалено повертаємо true
+                return true;
             }
             prev_node = target_node;
             target_node = target_node->next_;

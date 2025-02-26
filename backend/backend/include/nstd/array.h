@@ -12,11 +12,11 @@ namespace nstd {
         array();
         ~array();
 
-        array(const array& other); // конструктор копіювання
-        array& operator=(const array& other); // присвоєння копіюванням
+        array(const array& other);
+        array& operator=(const array& other);
 
-        array(array&& other) noexcept; // конструктор переміщення
-        array& operator=(array&& other) noexcept; // присвоєння переміщенням
+        array(array&& other) noexcept;
+        array& operator=(array&& other) noexcept;
 
         void push_back(const T& value);
 
@@ -63,7 +63,7 @@ namespace nstd {
     }
 
     template<class T>
-    inline array<T>::array(size_t size) // можна заздалегіть виділити память
+    inline array<T>::array(size_t size)
     {
         capacity_ = size * 2;
         size_ = size;
@@ -74,7 +74,7 @@ namespace nstd {
     inline array<T>::~array()
     {
         if (data_)
-            delete[] data_; // очищаєм массив після виклику деструктора
+            delete[] data_;
     }
     template<class T>
     inline array<T>::array(const array<T>& other)
@@ -125,42 +125,42 @@ namespace nstd {
     template<class T>
     inline void array<T>::push_back(const T& value)
     {
-        if (size_ >= capacity_) // якщо розмір більше або дорівнює капасіті ->
+        if (size_ >= capacity_)
         {
-            capacity_ = capacity_ * 2; // збільшуємо в двічі
-            T* newData = new T[capacity_]; // створюємо новий массив
+            capacity_ = capacity_ * 2;
+            T* newData = new T[capacity_];
 
             for (size_t i = 0; i < size_; i++) {
-                newData[i] = data_[i]; // копіюємо старий массив в новий
+                newData[i] = data_[i];
             }
-            delete[] data_; // видаляємо старий
-            data_ = newData; // тепер наш массив вказує на новий массив
+            delete[] data_;
+            data_ = newData;
         }
 
-        data_[size_++] = value; // добавляємо в кінець масиву елемент
+        data_[size_++] = value;
     }
 
     template<class T>
     inline void array<T>::resize(size_t size)
     {
         if (size > capacity_) {
-            capacity_ = size * 2; // збільшуємо capacity в 2 рази 
+            capacity_ = size * 2;
             T* newData = new T[capacity_];
-            size_t copy_size; // кількість елементів які треба скопіювати з старого масиву в новий
+            size_t copy_size;
 
-            if (size > size_) { // якщо новий масив більше старого ->
-                copy_size = size_; // в більший массив копіюємо меньшу кількість елементів
+            if (size > size_) {
+                copy_size = size_;
             }
-            else { // інакше ->
-                copy_size = size; // в менший массив копіюємо меньшу кількість елементів, та обрізаємо старий массив
+            else {
+                copy_size = size;
             }
 
             for (size_t i = 0; i < copy_size; i++) {
-                newData[i] = data_[i]; // копіюємо старий массив в новий
+                newData[i] = data_[i];
             }
 
-            delete[] data_; // видаляємо старий
-            data_ = newData; // тепер наш массив вказує на новий массив
+            delete[] data_;
+            data_ = newData;
         }
 
         size_ = size;
@@ -169,19 +169,19 @@ namespace nstd {
     template<class T>
     inline T& array<T>::operator[](size_t index)
     {
-        return data_[index]; // перегружаємо оператор [] і повертаємо елемент массиву по індексу
+        return data_[index];
     }
 
     template<class T>
     inline const T& array<T>::operator[](size_t index) const
     {
-        return data_[index]; // перегружаємо оператор [] і повертаємо елемент массиву по індексу
+        return data_[index];
     }
 
     template<class T>
     inline size_t array<T>::size() const
     {
-        return size_; // повертаємо розмір массиву
+        return size_;
     }
 
     template<class T>
